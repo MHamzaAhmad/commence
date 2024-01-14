@@ -1,0 +1,43 @@
+{
+    package commandParser
+
+    import (
+        "fmt"
+    )
+
+    type Command struct {
+        Action any
+        Process any
+        Specifier any
+        Location any
+    }
+}
+
+STEP <- exp:EXPRESSION { return exp, nil }
+
+EXPRESSION <- act:ACTION _ proc:PROCESS _ spec:SPECIFIER _ loc:LOCATION {
+    return &Command{
+        Action: act,
+        Process: proc,
+        Specifier: spec,
+        Location: loc,
+    }, nil
+}
+
+ACTION <- act:ACTION_TYPE { return act, nil }
+
+ACTION_TYPE <- "open" {return string(c.text), nil}
+
+PROCESS <- proc:PROCESS_TYPE { return proc, nil }
+
+PROCESS_TYPE <- ("vscode" / "webstorm" / "iterm2" / "terminal" / "terminator") { return string(c.text), nil }
+
+SPECIFIER <- spec:SPECIFIER_TYPE { return spec, nil }
+
+SPECIFIER_TYPE <- ("in" / "at") { return string(c.text), nil }
+
+LOCATION <- loc:String { return loc, nil }
+
+_ "whitespace" <- [ \t\r\n]*
+
+String <- '"' (!'"' .)* '"' / "'" (!"'" .)* "'" / (!"'" .)+ { return string(c.text), nil }
