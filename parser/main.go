@@ -4,23 +4,31 @@ import (
 	"fmt"
 
 	commandParser "github.com/MhamzaAhmad/commence/parser/command"
-	"github.com/MhamzaAhmad/commence/parser/executer"
+	"github.com/MhamzaAhmad/commence/parser/generator"
 	"github.com/MhamzaAhmad/commence/reader"
+	"github.com/MhamzaAhmad/commence/utils"
+	"github.com/MhamzaAhmad/commence/writer"
 )
 
 func Parse(path string) {
 	sequence := reader.Read(path)
 
+	name := sequence.Name
 	cmds := sequence.Commands
 
-	fmt.Println(cmds[0])
-	parsed, err := commandParser.Parse("test.yaml", []byte(cmds[0]))
+	utils.DeleteIfExists(fmt.Sprintf("%s.sh", name))
 
-	if err != nil {
-		panic(err)
+	for _, cmd := range cmds {
+		parsed, err := commandParser.Parse(fmt.Sprintf("%s.yaml", name), []byte(cmd.Command))
+
+		if err != nil {
+			panic(err)
+		}
+
+		parsedCommand := parsed.(*commandParser.Command)
+
+		generated := generator.Generate(*parsedCommand)
+
+		writer.Write(fmt.Sprintf("%s.sh", name), generated)
 	}
-
-	parsedCommand := parsed.(*commandParser.Command)
-
-	executer.Execute(*parsedCommand)
 }

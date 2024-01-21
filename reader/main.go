@@ -5,19 +5,25 @@ import (
 
 	"gopkg.in/yaml.v3"
 )
-
-type Sequence struct {
-	Commands []string `yaml:"sequence"`
+type Config struct {
+	Name	string   `yaml:"name"`
+	Commands []Command `yaml:"sequence"`
 }
 
-func Read(path string) Sequence {
+type Command struct {
+	Command string `yaml:"cmd"`
+	SubCommand []string `yaml:"then,omitempty"`
+}
+
+
+func Read(path string) Config {
 	data, err := os.ReadFile(path)
 
 	if err != nil {
 		panic(err)
 	}
 
-	res := &Sequence{}
+	res := &Config{}
 	err = yaml.Unmarshal(data, res)
 
 	if err != nil {

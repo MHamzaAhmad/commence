@@ -1,3 +1,7 @@
+name: test
 sequence:
-  - open vscode in /Users/mac/Desktop/projects/playto
-  - open iterm2 in Desktop/Projects/MyProject
+  - cmd: open vscode in /Users/mac/Desktop/projects/playto
+    then:
+      - open iterm2 in Desktop/Projects/MyProject
+      - open iterm2 in Desktop/Projects/MyProject
+  - cmd: open iterm2 in Desktop/Projects/MyProject
