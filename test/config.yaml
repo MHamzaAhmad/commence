@@ -1,5 +1,6 @@
 name: test
+work-dir: /Users/mac/Desktop/projects/playto
 sequence:
-  - open vscode in /Users/mac/Desktop/projects/playto
-  - open iterm2 in /Users/mac/Desktop/projects/playto
-  - open iterm2 in /Users/mac/Desktop/projects/playto
+  - open vscode in .
+  - open iterm2 in .
+  - open iterm2 in .

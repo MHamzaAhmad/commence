@@ -7,6 +7,7 @@ import (
 )
 type Config struct {
 	Name	string   `yaml:"name"`
+	WorkDir string `yaml:"work-dir"`
 	Commands []string `yaml:"sequence"`
 }
 
