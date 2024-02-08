@@ -19,7 +19,7 @@ func Parse(path string) {
 	utils.DeleteIfExists(fmt.Sprintf("%s.sh", name))
 
 	for _, cmd := range cmds {
-		parsed, err := commandParser.Parse(fmt.Sprintf("%s.yaml", name), []byte(cmd.Command))
+		parsed, err := commandParser.Parse(fmt.Sprintf("%s.yaml", name), []byte(cmd))
 
 		if err != nil {
 			panic(err)
@@ -30,5 +30,7 @@ func Parse(path string) {
 		generated := generator.Generate(*parsedCommand)
 
 		writer.Write(fmt.Sprintf("%s.sh", name), generated)
+
+		writer.Write(fmt.Sprintf("%s.sh", name), "\n")
 	}
 }

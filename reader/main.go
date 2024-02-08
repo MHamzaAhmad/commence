@@ -7,12 +7,7 @@ import (
 )
 type Config struct {
 	Name	string   `yaml:"name"`
-	Commands []Command `yaml:"sequence"`
-}
-
-type Command struct {
-	Command string `yaml:"cmd"`
-	SubCommand []string `yaml:"then,omitempty"`
+	Commands []string `yaml:"sequence"`
 }
 
 
